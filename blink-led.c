@@ -5,43 +5,35 @@
  * Created on 11 de Fevereiro de 2016, 13:39
  */
 
-
 #include <xc.h>
-#include <p18f2550.h>
+#include "configuration.h"
 
-#pragma config FOSC = INTOSCIO_EC
-#pragma config FCMEN = OFF
-#pragma config BORV = 3
-#pragma config WDT = OFF
-#pragma config CPB = OFF
-#pragma config CPD = OFF
+#define _XTAL_FREQ 20e+6
 
 #define SET_BIT(reg,index)(reg |= (1 << index))
 #define CLR_BIT(reg,index)(reg &= ~(1 << index))
 
 #define LED LATB5
 
-void delayzz()
+void delay()
 {
-    int i,j;
-    for(i = 0; i < 5000; i++){
-        for(j = 0; j < 2; j++){}
+    int i;
+    for(i = 0; i < 50; i++){
+        __delay_ms(10);
     }
 }
-
-
 
 void main(void) {
     // define RB0 como saida
     TRISB = CLR_BIT(TRISB,5);
-
+    
     // loop infinito
     while(1) {
         LED = 1;
-        delayzz();
+        delay();
         LED = 0;
-        delayzz();
+        delay();
     }
-
+    
     return;
 }
